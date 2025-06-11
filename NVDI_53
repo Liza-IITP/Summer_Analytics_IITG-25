@@ -3,21 +3,21 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "bdb7a2c1",
+   "id": "9d308ebd",
    "metadata": {
     "_cell_guid": "b1076dfc-b9ad-4769-8c92-a6c4dae69d19",
     "_uuid": "8f2839f25d086af736a60e9eeb907d3b93b6e0e5",
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:28.686701Z",
-     "iopub.status.busy": "2025-06-10T18:15:28.686382Z",
-     "iopub.status.idle": "2025-06-10T18:15:30.386332Z",
-     "shell.execute_reply": "2025-06-10T18:15:30.385152Z"
+     "iopub.execute_input": "2025-06-11T00:41:31.051693Z",
+     "iopub.status.busy": "2025-06-11T00:41:31.051292Z",
+     "iopub.status.idle": "2025-06-11T00:41:33.027104Z",
+     "shell.execute_reply": "2025-06-11T00:41:33.025844Z"
     },
     "papermill": {
-     "duration": 1.705565,
-     "end_time": "2025-06-10T18:15:30.387926",
+     "duration": 1.981816,
+     "end_time": "2025-06-11T00:41:33.028897",
      "exception": false,
-     "start_time": "2025-06-10T18:15:28.682361",
+     "start_time": "2025-06-11T00:41:31.047081",
      "status": "completed"
     },
     "tags": []
@@ -55,19 +55,19 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "38f681cd",
+   "id": "f64f642f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:30.394302Z",
-     "iopub.status.busy": "2025-06-10T18:15:30.393896Z",
-     "iopub.status.idle": "2025-06-10T18:15:30.502030Z",
-     "shell.execute_reply": "2025-06-10T18:15:30.500999Z"
+     "iopub.execute_input": "2025-06-11T00:41:33.035589Z",
+     "iopub.status.busy": "2025-06-11T00:41:33.035095Z",
+     "iopub.status.idle": "2025-06-11T00:41:33.148496Z",
+     "shell.execute_reply": "2025-06-11T00:41:33.147412Z"
     },
     "papermill": {
-     "duration": 0.113069,
-     "end_time": "2025-06-10T18:15:30.503771",
+     "duration": 0.118127,
+     "end_time": "2025-06-11T00:41:33.150000",
      "exception": false,
-     "start_time": "2025-06-10T18:15:30.390702",
+     "start_time": "2025-06-11T00:41:33.031873",
      "status": "completed"
     },
     "tags": []
@@ -474,19 +474,19 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "0d052254",
+   "id": "d3c250e1",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:30.510928Z",
-     "iopub.status.busy": "2025-06-10T18:15:30.510641Z",
-     "iopub.status.idle": "2025-06-10T18:15:31.989446Z",
-     "shell.execute_reply": "2025-06-10T18:15:31.988509Z"
+     "iopub.execute_input": "2025-06-11T00:41:33.157544Z",
+     "iopub.status.busy": "2025-06-11T00:41:33.156850Z",
+     "iopub.status.idle": "2025-06-11T00:41:35.110908Z",
+     "shell.execute_reply": "2025-06-11T00:41:35.109910Z"
     },
     "papermill": {
-     "duration": 1.484338,
-     "end_time": "2025-06-10T18:15:31.991298",
+     "duration": 1.959962,
+     "end_time": "2025-06-11T00:41:35.112988",
      "exception": false,
-     "start_time": "2025-06-10T18:15:30.506960",
+     "start_time": "2025-06-11T00:41:33.153026",
      "status": "completed"
     },
     "tags": []
@@ -510,19 +510,19 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "be4db39d",
+   "id": "cfdb7679",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:32.000719Z",
-     "iopub.status.busy": "2025-06-10T18:15:32.000199Z",
-     "iopub.status.idle": "2025-06-10T18:15:39.363582Z",
-     "shell.execute_reply": "2025-06-10T18:15:39.362355Z"
+     "iopub.execute_input": "2025-06-11T00:41:35.121014Z",
+     "iopub.status.busy": "2025-06-11T00:41:35.120396Z",
+     "iopub.status.idle": "2025-06-11T00:41:42.605959Z",
+     "shell.execute_reply": "2025-06-11T00:41:42.604311Z"
     },
     "papermill": {
-     "duration": 7.369203,
-     "end_time": "2025-06-10T18:15:39.365350",
+     "duration": 7.491749,
+     "end_time": "2025-06-11T00:41:42.607826",
      "exception": false,
-     "start_time": "2025-06-10T18:15:31.996147",
+     "start_time": "2025-06-11T00:41:35.116077",
      "status": "completed"
     },
     "tags": []
@@ -532,14 +532,8 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "/usr/local/lib/python3.11/dist-packages/sklearn/linear_model/_logistic.py:458: ConvergenceWarning: lbfgs failed to converge (status=1):\n",
-      "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT.\n",
-      "\n",
-      "Increase the number of iterations (max_iter) or scale the data as shown in:\n",
-      "    https://scikit-learn.org/stable/modules/preprocessing.html\n",
-      "Please also refer to the documentation for alternative solver options:\n",
-      "    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression\n",
-      "  n_iter_i = _check_optimize_result(\n"
+      "/usr/local/lib/python3.11/dist-packages/sklearn/linear_model/_sag.py:350: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge\n",
+      "  warnings.warn(\n"
      ]
     }
    ],
@@ -562,7 +556,7 @@
     "pipeline = Pipeline([\n",
     "    ('imputer', KNNImputer(n_neighbors=5)),\n",
     "    ('scaler', StandardScaler()),\n",
-    "    ('model', LogisticRegression(multi_class='multinomial', solver='lbfgs', max_iter=100))\n",
+    "    ('model', LogisticRegression(multi_class='multinomial', solver='saga', max_iter=100))\n",
     "])\n",
     "\n",
     "# Fit pipeline\n",
@@ -575,19 +569,19 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "49ff250f",
+   "id": "e345d02b",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:39.373888Z",
-     "iopub.status.busy": "2025-06-10T18:15:39.373312Z",
-     "iopub.status.idle": "2025-06-10T18:15:39.387133Z",
-     "shell.execute_reply": "2025-06-10T18:15:39.386112Z"
+     "iopub.execute_input": "2025-06-11T00:41:42.615864Z",
+     "iopub.status.busy": "2025-06-11T00:41:42.614850Z",
+     "iopub.status.idle": "2025-06-11T00:41:42.628925Z",
+     "shell.execute_reply": "2025-06-11T00:41:42.627873Z"
     },
     "papermill": {
-     "duration": 0.019471,
-     "end_time": "2025-06-10T18:15:39.388587",
+     "duration": 0.019449,
+     "end_time": "2025-06-11T00:41:42.630415",
      "exception": false,
-     "start_time": "2025-06-10T18:15:39.369116",
+     "start_time": "2025-06-11T00:41:42.610966",
      "status": "completed"
     },
     "tags": []
@@ -599,7 +593,7 @@
      "text": [
       "              precision    recall  f1-score   support\n",
       "\n",
-      "        farm       0.88      0.86      0.87       168\n",
+      "        farm       0.89      0.86      0.87       168\n",
       "      forest       0.99      1.00      0.99      1232\n",
       "       grass       0.80      0.72      0.76        39\n",
       "  impervious       0.83      0.90      0.87       134\n",
@@ -628,19 +622,19 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "9d572ee1",
+   "id": "7357f32d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:39.395914Z",
-     "iopub.status.busy": "2025-06-10T18:15:39.395001Z",
-     "iopub.status.idle": "2025-06-10T18:15:39.421340Z",
-     "shell.execute_reply": "2025-06-10T18:15:39.420539Z"
+     "iopub.execute_input": "2025-06-11T00:41:42.637475Z",
+     "iopub.status.busy": "2025-06-11T00:41:42.637129Z",
+     "iopub.status.idle": "2025-06-11T00:41:42.667116Z",
+     "shell.execute_reply": "2025-06-11T00:41:42.666279Z"
     },
     "papermill": {
-     "duration": 0.031305,
-     "end_time": "2025-06-10T18:15:39.422858",
+     "duration": 0.035301,
+     "end_time": "2025-06-11T00:41:42.668693",
      "exception": false,
-     "start_time": "2025-06-10T18:15:39.391553",
+     "start_time": "2025-06-11T00:41:42.633392",
      "status": "completed"
     },
     "tags": []
@@ -665,19 +659,19 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "66753863",
+   "id": "8730e8ab",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:39.429875Z",
-     "iopub.status.busy": "2025-06-10T18:15:39.429588Z",
-     "iopub.status.idle": "2025-06-10T18:15:39.434874Z",
-     "shell.execute_reply": "2025-06-10T18:15:39.434157Z"
+     "iopub.execute_input": "2025-06-11T00:41:42.676920Z",
+     "iopub.status.busy": "2025-06-11T00:41:42.675850Z",
+     "iopub.status.idle": "2025-06-11T00:41:42.682155Z",
+     "shell.execute_reply": "2025-06-11T00:41:42.681061Z"
     },
     "papermill": {
-     "duration": 0.010153,
-     "end_time": "2025-06-10T18:15:39.436120",
+     "duration": 0.011966,
+     "end_time": "2025-06-11T00:41:42.683874",
      "exception": false,
-     "start_time": "2025-06-10T18:15:39.425967",
+     "start_time": "2025-06-11T00:41:42.671908",
      "status": "completed"
     },
     "tags": []
@@ -691,19 +685,19 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "id": "0af642a3",
+   "id": "48cf3b60",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-06-10T18:15:39.442885Z",
-     "iopub.status.busy": "2025-06-10T18:15:39.442591Z",
-     "iopub.status.idle": "2025-06-10T18:15:39.461771Z",
-     "shell.execute_reply": "2025-06-10T18:15:39.460875Z"
+     "iopub.execute_input": "2025-06-11T00:41:42.691185Z",
+     "iopub.status.busy": "2025-06-11T00:41:42.690868Z",
+     "iopub.status.idle": "2025-06-11T00:41:42.713599Z",
+     "shell.execute_reply": "2025-06-11T00:41:42.712532Z"
     },
     "papermill": {
-     "duration": 0.024244,
-     "end_time": "2025-06-10T18:15:39.463342",
+     "duration": 0.028254,
+     "end_time": "2025-06-11T00:41:42.715299",
      "exception": false,
-     "start_time": "2025-06-10T18:15:39.439098",
+     "start_time": "2025-06-11T00:41:42.687045",
      "status": "completed"
     },
     "tags": []
@@ -755,14 +749,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 15.945003,
-   "end_time": "2025-06-10T18:15:40.085703",
+   "duration": 17.344613,
+   "end_time": "2025-06-11T00:41:43.438424",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2025-06-10T18:15:24.140700",
+   "start_time": "2025-06-11T00:41:26.093811",
    "version": "2.6.0"
   }
  },
