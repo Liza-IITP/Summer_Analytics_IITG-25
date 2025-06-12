@@ -1,0 +1,302 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "962ab178",
+   "metadata": {
+    "_cell_guid": "b1076dfc-b9ad-4769-8c92-a6c4dae69d19",
+    "_uuid": "8f2839f25d086af736a60e9eeb907d3b93b6e0e5",
+    "execution": {
+     "iopub.execute_input": "2025-06-12T04:46:04.925733Z",
+     "iopub.status.busy": "2025-06-12T04:46:04.924901Z",
+     "iopub.status.idle": "2025-06-12T04:46:06.582701Z",
+     "shell.execute_reply": "2025-06-12T04:46:06.581729Z"
+    },
+    "papermill": {
+     "duration": 1.662668,
+     "end_time": "2025-06-12T04:46:06.584133",
+     "exception": false,
+     "start_time": "2025-06-12T04:46:04.921465",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "/kaggle/input/summer-analytics-mid-hackathon/hacktest.csv\n",
+      "/kaggle/input/summer-analytics-mid-hackathon/hacktrain.csv\n"
+     ]
+    }
+   ],
+   "source": [
+    "# This Python 3 environment comes with many helpful analytics libraries installed\n",
+    "# It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python\n",
+    "# For example, here's several helpful packages to load\n",
+    "\n",
+    "import numpy as np # linear algebra\n",
+    "import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)\n",
+    "\n",
+    "# Input data files are available in the read-only \"../input/\" directory\n",
+    "# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory\n",
+    "\n",
+    "import os\n",
+    "for dirname, _, filenames in os.walk('/kaggle/input'):\n",
+    "    for filename in filenames:\n",
+    "        print(os.path.join(dirname, filename))\n",
+    "\n",
+    "# You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using \"Save & Run All\" \n",
+    "# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "ac103151",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-06-12T04:46:06.589165Z",
+     "iopub.status.busy": "2025-06-12T04:46:06.588811Z",
+     "iopub.status.idle": "2025-06-12T04:51:57.365786Z",
+     "shell.execute_reply": "2025-06-12T04:51:57.364867Z"
+    },
+    "papermill": {
+     "duration": 350.783661,
+     "end_time": "2025-06-12T04:51:57.369765",
+     "exception": false,
+     "start_time": "2025-06-12T04:46:06.586104",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "✅ Classification Report:\n",
+      "              precision    recall  f1-score   support\n",
+      "\n",
+      "        farm       0.76      0.89      0.82       210\n",
+      "      forest       0.99      0.95      0.97      1540\n",
+      "       grass       0.60      0.73      0.66        49\n",
+      "  impervious       0.84      0.86      0.85       167\n",
+      "     orchard       0.55      0.75      0.63         8\n",
+      "       water       0.55      0.81      0.66        26\n",
+      "\n",
+      "    accuracy                           0.93      2000\n",
+      "   macro avg       0.71      0.83      0.76      2000\n",
+      "weighted avg       0.94      0.93      0.93      2000\n",
+      "\n",
+      "✅ Validation Accuracy: 0.9265\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/usr/local/lib/python3.11/dist-packages/sklearn/linear_model/_sag.py:350: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge\n",
+      "  warnings.warn(\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "from sklearn.linear_model import LogisticRegression, LinearRegression\n",
+    "from sklearn.impute import KNNImputer\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "from sklearn.preprocessing import StandardScaler\n",
+    "from sklearn.metrics import classification_report, accuracy_score\n",
+    "\n",
+    "df_train = pd.read_csv('/kaggle/input/summer-analytics-mid-hackathon/hacktrain.csv')\n",
+    "df_test = pd.read_csv('/kaggle/input/summer-analytics-mid-hackathon/hacktest.csv')\n",
+    "\n",
+    "ndvi_cols = sorted([col for col in df_train.columns if col.endswith('_N')])\n",
+    "\n",
+    "# Regression-based imputation function\n",
+    "def impute_with_regression(df, threshold=0.4):\n",
+    "    corr_matrix = df.corr()\n",
+    "    df_imputed = df.copy()\n",
+    "    for target_col in df.columns:\n",
+    "        if df[target_col].isna().sum() == 0:\n",
+    "            continue\n",
+    "        correlated = corr_matrix[target_col][corr_matrix[target_col].abs() > threshold].drop(target_col, errors='ignore')\n",
+    "        if len(correlated) < 2:\n",
+    "            continue\n",
+    "        train_mask = (~df[target_col].isna()) & df[correlated.index].notna().all(axis=1)\n",
+    "        predict_mask = (df[target_col].isna()) & df[correlated.index].notna().all(axis=1)\n",
+    "        if train_mask.sum() == 0 or predict_mask.sum() == 0:\n",
+    "            continue\n",
+    "        model = LinearRegression()\n",
+    "        model.fit(df.loc[train_mask, correlated.index], df.loc[train_mask, target_col])\n",
+    "        df_imputed.loc[predict_mask, target_col] = model.predict(df.loc[predict_mask, correlated.index])\n",
+    "    return df_imputed\n",
+    "\n",
+    "# Impute train and test NDVI\n",
+    "ndvi_train = impute_with_regression(df_train[ndvi_cols])\n",
+    "ndvi_train = pd.DataFrame(KNNImputer(n_neighbors=6).fit_transform(ndvi_train), columns=ndvi_cols)\n",
+    "df_train[ndvi_cols] = ndvi_train\n",
+    "\n",
+    "ndvi_test = impute_with_regression(df_test[ndvi_cols])\n",
+    "ndvi_test = pd.DataFrame(KNNImputer(n_neighbors=6).fit_transform(ndvi_test), columns=ndvi_cols)\n",
+    "df_test[ndvi_cols] = ndvi_test\n",
+    "\n",
+    "# Feature Engineering\n",
+    "def add_features(df):\n",
+    "    df['NDVI_mean'] = df[ndvi_cols].mean(axis=1)\n",
+    "    df['NDVI_std'] = df[ndvi_cols].std(axis=1)\n",
+    "    df['NDVI_max'] = df[ndvi_cols].max(axis=1)\n",
+    "    df['NDVI_high'] = (df[ndvi_cols] > 0.6).sum(axis=1)\n",
+    "    df['NDVI_low'] = (df[ndvi_cols] < 0.2).sum(axis=1)\n",
+    "    df['NDVI_peak'] = df[ndvi_cols].idxmax(axis=1).str.extract(r'(\\d{6})').astype(float)\n",
+    "    df['NDVI_min'] = df[ndvi_cols].min(axis=1)\n",
+    "    df['NDVI_range'] = df['NDVI_max'] - df['NDVI_min']\n",
+    "    df['NDVI_skew'] = df[ndvi_cols].skew(axis=1)\n",
+    "    df['NDVI_kurt'] = df[ndvi_cols].kurtosis(axis=1)\n",
+    "\n",
+    "add_features(df_train)\n",
+    "add_features(df_test)\n",
+    "features = ndvi_cols + ['NDVI_mean', 'NDVI_std', 'NDVI_max', 'NDVI_high', 'NDVI_low', 'NDVI_peak']\n",
+    "X = df_train[features]\n",
+    "X_test_final = df_test[features]\n",
+    "y = df_train['class']\n",
+    "y_encoded = y.astype('category').cat.codes\n",
+    "class_map = dict(enumerate(y.astype('category').cat.categories))\n",
+    "\n",
+    "from sklearn.preprocessing import PolynomialFeatures\n",
+    "\n",
+    "# Train/validation split\n",
+    "X_train, X_val, y_train, y_val = train_test_split(X, y_encoded, stratify=y_encoded, test_size=0.25, random_state=42)\n",
+    "\n",
+    "# Scaling\n",
+    "scaler = StandardScaler()\n",
+    "X_train_scaled = scaler.fit_transform(X_train)\n",
+    "X_val_scaled = scaler.transform(X_val)\n",
+    "X_test_scaled = scaler.transform(X_test_final)\n",
+    "\n",
+    "# Polynomial features (interaction-only)\n",
+    "poly = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)\n",
+    "X_train_scaled = poly.fit_transform(X_train_scaled)\n",
+    "X_val_scaled = poly.transform(X_val_scaled)  # ❗️use poly.transform\n",
+    "X_test_scaled = poly.transform(X_test_scaled)\n",
+    "\n",
+    "# Logistic Regression model\n",
+    "model = LogisticRegression(\n",
+    "    solver='saga',\n",
+    "    max_iter=2500,\n",
+    "    penalty='l2',\n",
+    "    class_weight='balanced',\n",
+    "    random_state=42\n",
+    ")\n",
+    "model.fit(X_train_scaled, y_train)\n",
+    "\n",
+    "# Evaluation\n",
+    "y_pred = model.predict(X_val_scaled)\n",
+    "print(\"✅ Classification Report:\")\n",
+    "print(classification_report(y_val, y_pred, target_names=class_map.values()))\n",
+    "print(\"✅ Validation Accuracy:\", accuracy_score(y_val, y_pred))\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "48aed70e",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-06-12T04:51:57.374330Z",
+     "iopub.status.busy": "2025-06-12T04:51:57.374080Z",
+     "iopub.status.idle": "2025-06-12T04:51:57.392284Z",
+     "shell.execute_reply": "2025-06-12T04:51:57.391413Z"
+    },
+    "papermill": {
+     "duration": 0.022039,
+     "end_time": "2025-06-12T04:51:57.393640",
+     "exception": false,
+     "start_time": "2025-06-12T04:51:57.371601",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "📁 Submission file created: submission.csv\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Predict on test set\n",
+    "y_test_pred = model.predict(X_test_scaled)\n",
+    "\n",
+    "# Convert predicted codes back to original class labels\n",
+    "y_test_labels = pd.Series(y_test_pred).map(class_map)\n",
+    "\n",
+    "# Create submission DataFrame\n",
+    "submission = pd.DataFrame({\n",
+    "    'ID': df_test['ID'],\n",
+    "    'class': y_test_labels\n",
+    "})\n",
+    "\n",
+    "\n",
+    "# Save to CSV\n",
+    "submission.to_csv('submission.csv', index=False)\n",
+    "\n",
+    "print(\"📁 Submission file created: submission.csv\")\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kaggle": {
+   "accelerator": "none",
+   "dataSources": [
+    {
+     "databundleVersionId": 12585144,
+     "sourceId": 104491,
+     "sourceType": "competition"
+    }
+   ],
+   "dockerImageVersionId": 31040,
+   "isGpuEnabled": false,
+   "isInternetEnabled": true,
+   "language": "python",
+   "sourceType": "notebook"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.11"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": 357.306655,
+   "end_time": "2025-06-12T04:51:57.913329",
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "__notebook__.ipynb",
+   "output_path": "__notebook__.ipynb",
+   "parameters": {},
+   "start_time": "2025-06-12T04:46:00.606674",
+   "version": "2.6.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
