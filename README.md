@@ -7,5 +7,3 @@ Week-03
 ![alt-img](img3.png)
 Week-04
 ![alt-img](img4.png)
-Week-05
-
